@@ -1,0 +1,27 @@
+
+skinparam componentStyle rectangle
+
+actor User
+
+rectangle "Polymarket Widget\n(Frontend)" as Widget
+
+component "AI Prediction Service" as AI
+component "Wallet Provider\n(MetaMask / WalletConnect)" as Wallet
+component "Polymarket API\n& Smart Contracts" as Polymarket
+
+User <--> Widget : Interact
+
+Widget --> AI : Request predictions\nand recommendations
+AI --> Widget : Suggested outcomes
+
+Widget --> Wallet : Connect wallet\nSign transactions
+Wallet --> Widget : Signature\nConnection status
+
+Widget --> Polymarket : Search markets\nPlace bets
+Polymarket --> Widget : Markets\nTransaction status
+
+AI --> Polymarket : Fetch market data
+Polymarket --> AI : Odds & market information
+
+@enduml
+

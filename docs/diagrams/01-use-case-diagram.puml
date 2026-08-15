@@ -1,0 +1,43 @@
+@startuml
+
+left to right direction
+
+actor User
+actor "AI Prediction Service" as AI
+actor "Wallet Provider" as Wallet
+actor "Polymarket Platform" as PM
+
+rectangle "Polymarket Widget" {
+
+    usecase "Search Markets" as UC1
+    usecase "View Market Details" as UC2
+    usecase "Request AI Recommendation" as UC3
+    usecase "View AI Prediction" as UC4
+    usecase "Connect Wallet" as UC5
+    usecase "Place Bet" as UC6
+    usecase "Sign Transaction" as UC7
+    usecase "Confirm Bet" as UC8
+    usecase "View Bet Status" as UC9
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC5
+User --> UC6
+User --> UC9
+
+UC3 .> UC4 : <<include>>
+UC6 .> UC5 : <<include>>
+UC6 .> UC7 : <<include>>
+UC6 .> UC8 : <<include>>
+
+AI --> UC4
+Wallet --> UC5
+Wallet --> UC7
+PM --> UC1
+PM --> UC2
+PM --> UC6
+PM --> UC9
+
+@enduml

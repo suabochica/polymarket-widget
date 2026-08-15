@@ -1,0 +1,56 @@
+@startuml
+
+actor User
+
+participant "Polymarket Widget" as Widget
+participant "AI Prediction Service" as AI
+participant "Wallet Provider" as Wallet
+participant "Polymarket API" as Market
+
+== Search Markets ==
+
+User -> Widget: Search markets(keyword)
+Widget -> Market: Query markets(keyword)
+Market --> Widget: Market list
+Widget --> User: Display markets
+
+== AI Recommendation ==
+
+User -> Widget: Request AI prediction
+Widget -> AI: Analyze selected market
+AI -> Market: Retrieve market data
+Market --> AI: Market details / odds
+AI --> Widget: Predicted outcome + confidence
+Widget --> User: Show recommendation
+
+== Place Bet ==
+
+User -> Widget: Select outcome and amount
+
+Widget -> Wallet: Check connection
+
+alt Wallet not connected
+    Wallet --> Widget: Not connected
+    Widget -> Wallet: Connect wallet
+    Wallet --> Widget: Connection established
+else Wallet connected
+    Wallet --> Widget: Connected
+end
+
+Widget --> User: Review bet details
+
+User -> Widget: Confirm bet
+
+Widget -> Wallet: Sign transaction
+Wallet --> Widget: Signed transaction
+
+Widget -> Market: Submit bet transaction
+Market --> Widget: Transaction result
+
+alt Success
+    Widget --> User: Bet successfully placed
+else Failure
+    Widget --> User: Display error message
+end
+
+@enduml

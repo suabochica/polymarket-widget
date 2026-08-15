@@ -1,0 +1,68 @@
+@startuml
+
+start
+
+:Open Polymarket Widget;
+
+:Enter search criteria;
+
+:Search markets;
+
+if (Markets found?) then (Yes)
+
+    :Display market list;
+
+    if (Use AI assistance?) then (Yes)
+
+        :Select market for analysis;
+
+        :Send market data to AI service;
+
+        :AI analyzes market;
+
+        :Generate outcome prediction;
+
+        :Display AI recommendation;
+
+    else (No)
+
+    endif
+
+    :Select market;
+
+    :Select outcome;
+
+    :Enter bet amount;
+
+    :Validate wallet connection;
+
+    if (Wallet connected?) then (Yes)
+
+        :Review bet details;
+
+        :Confirm bet;
+
+        :Submit transaction to Polymarket;
+
+        if (Transaction successful?) then (Yes)
+            :Display success message;
+        else (No)
+            :Display transaction error;
+        endif
+
+    else (No)
+
+        :Prompt wallet connection;
+        :Connect wallet;
+
+    endif
+
+else (No)
+
+    :Display no results found;
+
+endif
+
+stop
+
+@enduml
