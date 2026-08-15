@@ -1,4 +1,4 @@
-import type { Market } from "../../shared/types.ts"
+import type { Analysis, Market } from "../../shared/types.ts"
 
 async function req<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(path, {
@@ -11,6 +11,9 @@ async function req<T>(path: string, init?: RequestInit): Promise<T> {
   return data as T;
 }
 
+
 export const api = {
   markets: (limit = 60) => req<{ markets: Market[] }>(`/api/markets?limit=${limit}`).then((r) => r.markets),
+  analyze: (question: string, yesPrice: number | null) =>
+    req<Analysis>("/api/analyze", { method: "POST", body: JSON.stringify({ question, yesPrice }) }),
 }

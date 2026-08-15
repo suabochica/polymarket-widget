@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 
 import { fetchGammaMarkets } from './lib/gamma.ts'
 import { toMarket } from './lib/quality.ts'
+import { analyzeMarket } from './lib/ai.ts'
 
 type Env = {
   Bindings: {
@@ -30,4 +31,14 @@ app.get("/api/markets", async (response) => {
   console.log(tmp)
 
   return tmp;
+});
+
+app.post("/api/analyze", async (response) => {
+  const { question, yesPrice } = await response.req.json<{ question?: string; yesPrice?: number | null }>();
+
+  if (!question) return response.json({ error: "question is required" }, 400);
+
+  const analysis = await analyzeMarket(response.env, question, yesPrice ?? null);
+
+  return response.json(analysis);
 });

@@ -1,49 +1,37 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect } from "react"
 
 import type { Market } from '../shared/types.ts'
 import { api } from './lib/api.ts'
 
 import './App.css'
-import { Markets } from './pages/Markets.tsx'
+
+import { type AnalyzeTarget, AnalyzeDialog } from './components/AnalyzeDialog.tsx'
+import { MarketsTable } from './components/MarketsTable.tsx'
 
 function App() {
   const [markets, setMarkets] = useState<Market[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [analyze, setAnalyze] = useState<AnalyzeTarget | null>(null);
 
-  const loadMarkets = useCallback(async () => {
-    setLoading(true);
+  useEffect(() => {
+    let cancelled = false;
 
-    try {
-      const [markets] = await Promise.all([
-        api.markets(40).catch(() => [])
-      ])
+    api.markets(40)
+      .then((data) => { if (!cancelled) setMarkets(data) })
+      .catch((error) => { if (!cancelled) console.error(error) });
 
-      setMarkets(markets);
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }, []);
-
-  useEffect(() => { loadMarkets() }, [loadMarkets])
+    return () => { cancelled = true };
+  }, [])
 
   return (
     <>
       <section id="center">
         <div>
           <h1>Polymarket Widget</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
         </div>
       </section>
 
-      <div className="ticks"></div>
-
-      <Markets markets={markets}/>
-
-      <div className="ticks"></div>
+      <MarketsTable markets={markets} onAnalyze={(m) => setAnalyze({ question: m.question, yes: m.yes })}/>
+      {analyze && <AnalyzeDialog key={analyze.question} target={analyze} onClose={() => setAnalyze(null)} />}
       <section id="spacer"></section>
     </>
   )

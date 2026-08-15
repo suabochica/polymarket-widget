@@ -1,27 +1,35 @@
-import { defineConfig, type Plugin } from 'vite'
+import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-// Serves the Hono app (src/server/index.ts) under /api in development.
-// Note: GET/HEAD only — request bodies are not forwarded yet.
+// Serves the Hono app (src/server/index.ts) under /api in development,
+// exposing .env variables as Workers-style bindings (c.env).
 function honoApi(): Plugin {
   return {
     name: 'hono-api',
     configureServer(server) {
+      const env = { ...loadEnv(server.config.mode, server.config.root, ''), ...process.env }
+
       server.middlewares.use('/api', (req, res) => {
         void (async () => {
           try {
             const { default: app } = (await server.ssrLoadModule('/src/server/index.ts')) as {
-              default: { fetch: (request: Request) => Promise<Response> }
+              default: { fetch: (request: Request, env?: unknown) => Promise<Response> }
             }
 
             const headers = new Headers()
             for (const [key, value] of Object.entries(req.headers)) {
               if (value !== undefined) headers.set(key, Array.isArray(value) ? value.join(', ') : value)
             }
+            headers.delete('content-length')
 
+            const chunks: Buffer[] = []
+            for await (const chunk of req) chunks.push(chunk as Buffer)
+
+            const method = req.method ?? 'GET'
+            const body = chunks.length > 0 && method !== 'GET' && method !== 'HEAD' ? Buffer.concat(chunks) : undefined
             const url = new URL(`/api${req.url ?? ''}`, 'http://localhost')
-            const response = await app.fetch(new Request(url, { method: req.method, headers }))
+            const response = await app.fetch(new Request(url, { method, headers, body }), env)
 
             res.statusCode = response.status
             response.headers.forEach((value, key) => res.setHeader(key, value))

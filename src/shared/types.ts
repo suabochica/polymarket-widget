@@ -3,6 +3,14 @@ export type BetStatus = "Done" | "Pending";
 export type TradeStatus = "open" | "closed"
 export type TradingMode = "paper" | "live";
 
+// A interface to store the IA recommendation
+export interface Analysis {
+  recommendation: "yes" | "no" | "avoid";
+  confidence: number;
+  fairValue: number | null;
+  rationale: string;
+}
+
 // A market quality score (0-100) with its component breakdown.
 export interface Quality {
   total: number;
