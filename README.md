@@ -100,6 +100,7 @@ The following features would be nice to have in the widget but weren't delivered
 - Unit tests for the codebase.
 - An enabled `live` trading mode to execute real transactions.
 - A Dockerized project.
+- Persist bet in a store database.
 
 ## 📄 License
 
