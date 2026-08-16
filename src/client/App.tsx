@@ -3,10 +3,8 @@ import { useState, useEffect } from "react"
 import type { Market } from '../shared/types.ts'
 import { api } from './lib/api.ts'
 
-import './App.css'
-
 import { type AnalyzeTarget, AnalyzeDialog } from './components/AnalyzeDialog.tsx'
-import { MarketsTable } from './components/MarketsTable.tsx'
+import { MarketsList } from './components/MarketsList.tsx'
 
 function App() {
   const [markets, setMarkets] = useState<Market[]>([]);
@@ -24,18 +22,21 @@ function App() {
 
   return (
     <>
-      <section id="center">
-        <div>
-          <h1>Polymarket Widget</h1>
+      <header className="sticky top-0 z-40 border-b border-border bg-glass backdrop-blur-xl">
+        <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+          <h1 className="text-[18px] font-semibold leading-6 tracking-[-0.01em]">Synthetic Forecast</h1>
+          <span className="text-label-caps font-mono text-muted">Polymarket · Paper</span>
         </div>
-      </section>
+      </header>
 
-      <MarketsTable
-        markets={markets}
-        onAnalyze={(m) => setAnalyze({ id: m.id, question: m.question, yes: m.yes, no: m.no })}
-      />
+      <main className="mx-auto w-full max-w-4xl px-4 py-6 sm:px-6">
+        <MarketsList
+          markets={markets}
+          onAnalyze={(m) => setAnalyze({ id: m.id, question: m.question, yes: m.yes, no: m.no })}
+        />
+      </main>
+
       {analyze && <AnalyzeDialog key={analyze.question} target={analyze} onClose={() => setAnalyze(null)} />}
-      <section id="spacer"></section>
     </>
   )
 }

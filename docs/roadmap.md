@@ -7,5 +7,6 @@ Roadmap
 - [x] View AI Prediction
 - [x] Connect Wallet
 - [x] Place Bet
-- [ ] Update Styles
+- [x] Update Styles
+- [ ] Update Readme
 

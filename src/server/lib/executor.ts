@@ -36,7 +36,11 @@ class PaperExecutor implements Executor {
 class LiveExecutor implements Executor {
   readonly mode = "live" as const;
 
-  constructor(private env: Record<string, string | undefined>) {}
+  private env: Record<string, string | undefined>;
+
+  constructor(env: Record<string, string | undefined>) {
+    this.env = env;
+  }
 
   private guard(): never {
     // TODO(live-trading): implement against the Polymarket CLOB via the relayer
@@ -46,7 +50,7 @@ class LiveExecutor implements Executor {
     throw new Error("Live trading is not enabled in this build. Keep mode=paper.");
   }
 
-  async buy(_req: OrderRequest): Promise<Fill> {
+  async buy(): Promise<Fill> {
     if (!this.env.RELAYER_API_KEY || !this.env.RELAYER_API_KEY_ADDRESS) {
       throw new Error("Live trading requires RELAYER_API_KEY and RELAYER_API_KEY_ADDRESS secrets.");
     }
