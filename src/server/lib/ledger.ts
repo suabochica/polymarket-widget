@@ -1,4 +1,4 @@
-import type { Side, Trade } from "../../../src/shared/types.ts";
+import type { Side, Trade } from "../../shared/types.ts";
 
 // A paper trade captured from POST /api/bet, before it is persisted.
 export interface NewTrade {
