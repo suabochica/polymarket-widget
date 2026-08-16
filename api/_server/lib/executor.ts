@@ -1,4 +1,4 @@
-import type { Side, TradingMode } from "../../shared/types.ts";
+import type { Side, TradingMode } from "../../../src/shared/types.ts";
 
 export interface OrderRequest {
   marketId: string;

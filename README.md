@@ -74,7 +74,7 @@ Bets are **paper trades only** — no real money moves. Live execution is intent
 - **Wrangler / Cloudflare:** trades persist to the D1 `trades` table. Apply the schema with:
 
 ```sh
-wrangler d1 execute polymarket-widget-db --file=src/server/schema.sql
+wrangler d1 execute polymarket-widget-db --file=api/_server/schema.sql
 ```
 
 ## 📁 Project Structure
@@ -82,8 +82,10 @@ wrangler d1 execute polymarket-widget-db --file=src/server/schema.sql
 ```
 src/
 ├── client/          # React UI (theme, App, components, API client)
-├── server/          # Hono API (routes, gamma, ai, executor, ledger)
 └── shared/          # Types shared between client and server
+api/
+├── [[...slug]].ts   # Vercel serverless function entrypoint
+└── _server/         # Hono API (routes, gamma, ai, executor, ledger)
 docs/
 ├── diagrams/        # PlantUML diagrams (use case, activity, sequence, component)
 └── ui/              # Design mockups (atoms, markets, place-bet)

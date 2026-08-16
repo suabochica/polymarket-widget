@@ -88,7 +88,7 @@ Key dependencies:
 
 **Purpose value:** the deployment boundary and interface surface — which services the widget depends on and in which direction. The DI-style seam around the executor (paper vs. live) is the fork in this structure that selects the bet-transport backend.
 
-**As implemented:** the widget and AI components are real. The **Wallet** component has no live counterpart (paper mode needs no signature), and **Polymarket** is used read-only via the Gamma API for markets; real bet submission awaits the relayer integration in the executor (`src/server/lib/executor.ts`).
+**As implemented:** the widget and AI components are real. The **Wallet** component has no live counterpart (paper mode needs no signature), and **Polymarket** is used read-only via the Gamma API for markets; real bet submission awaits the relayer integration in the executor (`api/_server/lib/executor.ts`).
 
 ---
 
@@ -101,4 +101,4 @@ Key dependencies:
 | 03 Sequence | Runtime interaction | *In what order do the parts talk?* |
 | 04 Component | Static structure | *What talks to what, and how is it deployed?* |
 
-The diagrams act as the shared contract for the codebase: `src/client` implements the widget UI, `src/server` implements the widget's API (with the executor seam splitting paper from the future live trading), and both map back to the flows above.
+The diagrams act as the shared contract for the codebase: `src/client` implements the widget UI, `api/_server` implements the widget's API (with the executor seam splitting paper from the future live trading), and both map back to the flows above.

@@ -2,7 +2,7 @@ import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-// Serves the Hono app (src/server/index.ts) under /api in development,
+// Serves the Hono app (api/_server/index.ts) under /api in development,
 // exposing .env variables as Workers-style bindings (c.env).
 function honoApi(): Plugin {
   return {
@@ -13,7 +13,7 @@ function honoApi(): Plugin {
       server.middlewares.use('/api', (req, res) => {
         void (async () => {
           try {
-            const { default: app } = (await server.ssrLoadModule('/src/server/index.ts')) as {
+            const { default: app } = (await server.ssrLoadModule('/api/_server/index.ts')) as {
               default: { fetch: (request: Request, env?: unknown) => Promise<Response> }
             }
 

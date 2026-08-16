@@ -1,4 +1,4 @@
-import type { Signal, Analysis } from "../../shared/types.ts";
+import type { Signal, Analysis } from "../../../src/shared/types.ts";
 
 const DEFAULT_MODEL = "anthropic/claude-sonnet-4";
 

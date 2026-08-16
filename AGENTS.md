@@ -2,7 +2,7 @@
 
 ## Project Context
 - Tech Stack: React 19, TypeScript, Tailwind CSS, Vite, Hono, and Wrangler.
-- Core Business Logic: Located inside `/src/server`.
+- Core Business Logic: Located inside `/api/_server`.
 - Presentation Logic: Located inside `/src/client`.
 - Cross-cutting utilities: Located inside `/src/shared`.
 

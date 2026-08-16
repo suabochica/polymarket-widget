@@ -1,5 +1,5 @@
 name = "polymarket-widget"
-main = "src/server/index.ts"
+main = "api/_server/index.ts"
 compatibility_date = "2025-04-01"
 compatibility_flags = ["nodejs_compat"]
 
