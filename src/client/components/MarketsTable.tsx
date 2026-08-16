@@ -43,7 +43,7 @@ function Question({ q, slug }: { q: string; slug: string }) {
   );
 }
 
-export function MarketsTable({ markets, onAnalyze }: { markets: Market[]; onAnalyze: (m: Market) => void }) {
+export function MarketsTable({ markets, onAnalyze }: { markets: Market[]; onAnalyze: (market: Market) => void }) {
   if (!markets.length) return <p>Couldn't load markets. The Polymarket Gamma API may be rate-limiting — try again.</p>;
   return (
     <div className="-mx-5 -mb-4 overflow-x-auto">
@@ -58,16 +58,16 @@ export function MarketsTable({ markets, onAnalyze }: { markets: Market[]; onAnal
           </tr>
         </thead>
         <tbody>
-          {markets.map((m) => (
-            <tr key={m.id} className="border-t border-border hover:bg-surface-sunken">
-              <Td><Question q={m.question} slug={m.slug} /></Td>
-              <Td right>{cents(m.yes)}</Td>
-              <Td right>{compactUsd(m.volume)}</Td>
-              <Td>{m.quality.grade} · {m.quality.total}</Td>
+          {markets.map((market) => (
+            <tr key={market.id} className="border-t border-border hover:bg-surface-sunken">
+              <Td><Question q={market.question} slug={market.slug} /></Td>
+              <Td right>{cents(market.yes)}</Td>
+              <Td right>{compactUsd(market.volume)}</Td>
+              <Td>{market.quality.grade} · {market.quality.total}</Td>
               <Td right>
                 <button
                   type="button"
-                  onClick={() => onAnalyze(m)}
+                  onClick={() => onAnalyze(market)}
                   className="rounded border border-border px-2 py-1 text-[12px] hover:bg-surface-sunken"
                 >
                   Analyze

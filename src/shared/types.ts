@@ -35,6 +35,18 @@ export interface Market {
   quality: Quality;
 }
 
+// A simulated (paper) fill produced by the executor.
+export interface Fill {
+  price: number;
+  shares: number;
+}
+
+// Response of POST /api/bet (paper mode).
+export interface BetResult {
+  fill: Fill;
+  trade: Trade;
+}
+
 // A row in the paper-trade ledger.
 export interface Trade {
   id: number;

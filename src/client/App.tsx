@@ -30,7 +30,10 @@ function App() {
         </div>
       </section>
 
-      <MarketsTable markets={markets} onAnalyze={(m) => setAnalyze({ question: m.question, yes: m.yes })}/>
+      <MarketsTable
+        markets={markets}
+        onAnalyze={(m) => setAnalyze({ id: m.id, question: m.question, yes: m.yes, no: m.no })}
+      />
       {analyze && <AnalyzeDialog key={analyze.question} target={analyze} onClose={() => setAnalyze(null)} />}
       <section id="spacer"></section>
     </>
