@@ -1,5 +1,5 @@
-import { parseOutcomePrices, num, type GammaMarket } from "./gamma";
-import type { Quality, Market } from "../../shared/types";
+import { parseOutcomePrices, num, type GammaMarket } from "./gamma.ts";
+import type { Quality, Market } from "../../shared/types.ts";
 
 function gradeFromScore(total: number): Quality["grade"] {
   if (total >= 80) return "A";
