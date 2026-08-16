@@ -8,5 +8,5 @@ Roadmap
 - [x] Connect Wallet
 - [x] Place Bet
 - [x] Update Styles
-- [ ] Update Readme
+- [x] Update Readme
 
